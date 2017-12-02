@@ -3,32 +3,46 @@
 #include <unistd.h>
 #include <string.h>
 
+char *read_input() {
+  printf("Input: ");
+  char *in;
+  fgets(in, 256, stdin); // 256 bytes
+  return in;
+}
+
 char **parse_args(char *line) {
-  int counter = 0;
-  char line2[100];
-  strcpy(line2, line);
-  while (line){
-    strsep(&line, " ");
-    counter++;
+  // removing last newline character
+  char lineCopy[strlen(line)];
+  strcpy(lineCopy, line);
+  lineCopy[strlen(lineCopy) - 1] = 0;
+
+  // counting # of args
+  char *line1 = lineCopy;
+  int numArgs = 0;
+  while(line1) {
+    strsep(&line1, " ");
+    numArgs++;
   }
-  printf("%d\n", counter);
-  char **arguments = malloc(counter * sizeof(char *));
+  // printf("numArgs: %d\n", numArgs);
+
+  // separating line into argument array
+  char **arguments = malloc(numArgs * sizeof(char *));
   int i = 0;
-  char *line3 = line2;
-  printf("line3: %s\n", line3 + 4);
-  while(line3) {
-    arguments[i] = strsep(&line3, " ");
+  while(line) {
+    arguments[i] = strsep(&line, " ");
     i++;
   }
   return arguments;
 }
 
+char **inputToArgs() {
+  char *input = read_input();
+  return parse_args(input);
+}
+
 int main() {
-  char *line;
-  fgets(line, 256, stdin);
-  char **args = parse_args(line);
-  printf("Running '%s'\n", line);
-  printf("[%s]\n", args[0]);
+  char **args = inputToArgs();
+  printf("args[0]: [%s]\n", args[2]);
 
   return 0;
 }
