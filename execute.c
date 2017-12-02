@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "input.c"
 
 void execute(char **command) {
   int parent = fork();
@@ -17,8 +16,9 @@ void execute(char **command) {
   }
 }
 
+/*
 int main() {
   execute(read_input());
-
   return 0;
 }
+*/

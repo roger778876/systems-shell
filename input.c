@@ -17,7 +17,7 @@ char **read_input() {
   // removing last newline character
   lineArray[strlen(lineArray) - 1] = 0;
   char *line = strdup(lineArray); // putting the new version into "line"
-  printf("lineArray: [%s]\n", lineArray);
+  // printf("lineArray: [%s]\n", lineArray);
 
   // counting # of args
   char *lineC = lineArray;
@@ -26,7 +26,7 @@ char **read_input() {
     strsep(&lineC, " ");
     numArgs++;
   }
-  printf("numArgs: %d\n", numArgs);
+  // printf("numArgs: %d\n", numArgs);
 
   // separating line into argument array
   char **arguments = malloc((numArgs + 1) * sizeof(char *)); // +1 to make room for NULL
@@ -39,12 +39,12 @@ char **read_input() {
   return arguments;
 }
 
-
-// int main() {
-//   char **args = read_input();
-//   printf("args[0]: [%s]\n", args[0]);
-//   printf("args[1]: [%s]\n", args[1]);
-//   printf("args[2]: [%s]\n", args[2]);
-
-//   return 0;
-// }
+/*
+int main() {
+  char **args = read_input();
+  printf("args[0]: [%s]\n", args[0]);
+  printf("args[1]: [%s]\n", args[1]);
+  printf("args[2]: [%s]\n", args[2]);
+  return 0;
+}
+*/
