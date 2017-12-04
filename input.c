@@ -6,7 +6,71 @@
 #define GREEN_TEXT "\x1b[32m"
 #define COLOR_RESET "\x1b[0m"
 
-char **read_input() {
+struct cmds_array {
+  char **cmds;
+  size_t num_cmds;
+};
+
+struct cmds_array separate_cmds(char *line) {
+  // duplicating line
+  char *line_copy = strdup(line);
+
+  // counting # of commands
+  char *line_string = line;
+  int num_cmds = 0;
+  while (line_string) {
+    strsep(&line_string, ";");
+    num_cmds++;
+  }
+  // printf("num_cmds: %d\n", num_cmds);
+
+  // separating into command array
+  char *line_copy_string = line_copy;
+  char **cmds = malloc(num_cmds * sizeof(char *));
+  int i = 0;
+  while (line_copy_string) {
+    cmds[i] = strsep(&line_copy_string, ";");
+    i++;
+  }
+
+  struct cmds_array output;
+  output.cmds = cmds;
+  output.num_cmds = num_cmds;
+  return output;
+}
+
+char **separate_args(char *cmd) {
+  // duplicating cmd
+  char *cmd_copy = strdup(cmd);
+
+  // counting # of args
+  char *cmd_string = cmd;
+  int num_args = 0;
+  while (cmd_string) {
+    strsep(&cmd_string, " ");
+    num_args++;
+  }
+  // printf("num_args: %d\n", num_args);
+
+  // separating into arg array
+  char *cmd_copy_string = cmd_copy;
+  char **args = malloc((num_args + 1) * sizeof(char *)); // +1 to make room for NULL for execvp
+  int i = 0;
+  while (cmd_copy_string) {
+    
+    char *arg = strsep(&cmd_copy_string, " ");
+    if (*arg) { // removes extra spaces
+      args[i] = arg;
+      i++;
+    }
+  }
+  args[i] = 0; // ending NULL
+
+  return args;
+}
+
+
+struct cmds_array read_input() {
   // getting current working directory
   char cwd[256];
   getcwd(cwd, sizeof(cwd));
@@ -17,33 +81,11 @@ char **read_input() {
   fgets(input, 256, stdin); // 256 bytes
   // printf("received input: [%s]\n", input);
 
-  // creating new string array with exact size
-  char lineArray[strlen(input)];
-  strcpy(lineArray, input);
+  // removing last newline character from input
+  input[strlen(input) - 1] = 0;
 
-  // removing last newline character
-  lineArray[strlen(lineArray) - 1] = 0;
-  char *line = strdup(lineArray); // putting the new version into "line"
-  // printf("lineArray: [%s]\n", lineArray);
-
-  // counting # of args
-  char *lineC = lineArray;
-  int numArgs = 0;
-  while (lineC) {
-    strsep(&lineC, " ");
-    numArgs++;
-  }
-  // printf("numArgs: %d\n", numArgs);
-
-  // separating line into argument array
-  char **arguments = malloc((numArgs + 1) * sizeof(char *)); // +1 to make room for NULL
-  int i = 0;
-  while (line) {
-    arguments[i] = strsep(&line, " ");
-    i++;
-  }
-  arguments[i] = 0; // ending NULL
-  return arguments;
+  struct cmds_array commands =  separate_cmds(input);
+  return commands;
 }
 
 /*
