@@ -16,11 +16,11 @@ struct cmds_array separate_cmds(char *line) {
   char *line_copy = strdup(line);
 
   // counting # of commands
-  char *line_string = line;
-  int num_cmds = 0;
-  while (line_string) {
-    strsep(&line_string, ";");
-    num_cmds++;
+  int num_cmds = 1;
+  for (int i = 0; line[i]; i++) {
+    if (line[i] == ';') {
+      num_cmds++;
+    }
   }
   // printf("num_cmds: %d\n", num_cmds);
 
@@ -44,11 +44,11 @@ char **separate_args(char *cmd) {
   char *cmd_copy = strdup(cmd);
 
   // counting # of args
-  char *cmd_string = cmd;
-  int num_args = 0;
-  while (cmd_string) {
-    strsep(&cmd_string, " ");
-    num_args++;
+  int num_args = 1;
+  for (int i = 0; cmd[i]; i++) {
+    if (cmd[i] == ' ') {
+      num_args++;
+    }
   }
   // printf("num_args: %d\n", num_args);
 
