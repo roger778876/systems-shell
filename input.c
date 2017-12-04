@@ -25,11 +25,10 @@ struct cmds_array separate_cmds(char *line) {
   // printf("num_cmds: %d\n", num_cmds);
 
   // separating into command array
-  char *line_copy_string = line_copy;
   char **cmds = malloc(num_cmds * sizeof(char *));
   int i = 0;
-  while (line_copy_string) {
-    cmds[i] = strsep(&line_copy_string, ";");
+  while (line_copy) {
+    cmds[i] = strsep(&line_copy, ";");
     i++;
   }
 
@@ -53,12 +52,10 @@ char **separate_args(char *cmd) {
   // printf("num_args: %d\n", num_args);
 
   // separating into arg array
-  char *cmd_copy_string = cmd_copy;
   char **args = malloc((num_args + 1) * sizeof(char *)); // +1 to make room for NULL for execvp
   int i = 0;
-  while (cmd_copy_string) {
-    
-    char *arg = strsep(&cmd_copy_string, " ");
+  while (cmd_copy) {
+    char *arg = strsep(&cmd_copy, " ");
     if (*arg) { // removes extra spaces
       args[i] = arg;
       i++;

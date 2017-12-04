@@ -12,6 +12,7 @@ int main() {
       num_cmds--;
       i++;
     }
+    free(commands.cmds);
   }
   
   return 0;

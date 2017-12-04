@@ -95,6 +95,7 @@ void execute(char *command) {
       }
     }
   }
+  free(args);
 }
 
 
