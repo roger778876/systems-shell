@@ -7,7 +7,7 @@ execute.o: execute.c
 input.o: input.c
 	gcc -c input.c
 
-main.c: main.c
+main.o: main.c
 	gcc -c main.c
 
 run:all
