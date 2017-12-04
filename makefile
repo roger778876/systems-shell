@@ -1,5 +1,5 @@
 all: execute.o input.o main.o
-	gcc -o main execute.o input.o main.o
+	gcc -o shell execute.o input.o main.o
 
 execute.o: 
 	gcc -c execute.c
@@ -11,4 +11,4 @@ main.c:
 	gcc -c main.c
 
 run:all
-	./main
+	./shell
