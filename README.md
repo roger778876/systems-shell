@@ -2,8 +2,10 @@
 
 Out shell implements all of the features that are included in execvp
 
+
 Headers:
-oid change_dir(char **command); 
+
+void change_dir(char **command); 
 
 void exit_program();
 
