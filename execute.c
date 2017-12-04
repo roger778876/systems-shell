@@ -5,6 +5,8 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <signal.h>
 
 void change_dir(char **command) {
   if (chdir(command[1])) {
