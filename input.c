@@ -3,9 +3,16 @@
 #include <unistd.h>
 #include <string.h>
 
+#define GREEN_TEXT "\x1b[32m"
+#define COLOR_RESET "\x1b[0m"
+
 char **read_input() {
+  // getting current working directory
+  char cwd[256];
+  getcwd(cwd, sizeof(cwd));
+
   // getting input
-  printf("Input: ");
+  printf(GREEN_TEXT "%s$ " COLOR_RESET, cwd);
   char input[256];
   fgets(input, 256, stdin); // 256 bytes
   // printf("received input: [%s]\n", input);

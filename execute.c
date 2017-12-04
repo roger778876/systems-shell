@@ -8,7 +8,6 @@ void execute(char **command) {
   if (parent) {
     int status;
     wait(&status);
-    printf("Parent done!\n");
   }
 
   if (!parent) {

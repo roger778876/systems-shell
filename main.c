@@ -4,7 +4,9 @@
 #include "execute.c"
 
 int main() {
-  execute(read_input());
+  while (1) {
+    execute(read_input());
+  }
   
   return 0;
 }
