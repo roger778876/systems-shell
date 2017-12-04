@@ -22,7 +22,11 @@ void exit_program() {
 void execute(char *command) {
   char **args = separate_args(command);
 
-  if (!strcmp(args[0], "cd")) {
+  if (!args[0]) {
+    return;
+  }
+
+  else if (!strcmp(args[0], "cd")) {
     change_dir(args);
   }
 
